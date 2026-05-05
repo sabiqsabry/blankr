@@ -1,0 +1,16 @@
+# Xcode & Swift
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+DerivedData/
+
+# Local build cache (see scripts/build-release-dmg.sh)
+.build/
+
+# macOS
+.DS_Store
+
+# Packaged releases (upload to GitHub Releases or your site; do not commit binaries)
+dist/
+*.dmg

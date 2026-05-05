@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Blankr.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="PanelBtn" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="MinHeight" Value="0" />
+                <Setter Property="Width" Value="28" />
+                <Setter Property="Height" Value="28" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+            <Style x:Key="PanelToggle" TargetType="ToggleButton">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="MinHeight" Value="0" />
+                <Setter Property="Width" Value="28" />
+                <Setter Property="Height" Value="28" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="44" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Editor area -->
+        <Grid Grid.Column="0" Background="White">
+            <RichEditBox x:Name="Editor"
+                         BorderThickness="0"
+                         BorderBrush="Transparent"
+                         Background="White"
+                         Foreground="#1E1E1E"
+                         Padding="48,40"
+                         FontFamily="Segoe UI Variable"
+                         FontSize="17"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         IsSpellCheckEnabled="False"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         CornerRadius="0"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+
+            <Button x:Name="NewNoteButton"
+                    Click="NewNoteButton_Click"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="14,10,0,0"
+                    Padding="10,5"
+                    Background="#18808080"
+                    BorderThickness="0"
+                    CornerRadius="6">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <FontIcon Glyph="&#xE710;" FontSize="11" Foreground="#999999" />
+                    <TextBlock Text="New" FontSize="12" FontWeight="Medium" Foreground="#999999" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- Formatting panel -->
+        <Grid Grid.Column="1" Background="#08000000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Spacing="4" Padding="0,12,0,0">
+
+                <!-- Bold -->
+                <ToggleButton x:Name="BoldButton" Click="BoldButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <TextBlock Text="B" FontSize="13" FontWeight="Bold"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+                <!-- Italic -->
+                <ToggleButton x:Name="ItalicButton" Click="ItalicButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <TextBlock Text="I" FontSize="13" FontStyle="Italic"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+                <!-- Underline -->
+                <ToggleButton x:Name="UnderlineButton" Click="UnderlineButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <TextBlock Text="U" FontSize="13" TextDecorations="Underline"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+                <!-- Divider -->
+                <Border Height="1" Background="#18000000" Margin="8,4" />
+
+                <!-- Font size up -->
+                <Button x:Name="FontSizeUpButton" Click="FontSizeUpButton_Click"
+                        Style="{StaticResource PanelBtn}">
+                    <TextBlock Text="+" FontSize="14"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </Button>
+
+                <!-- Font size label -->
+                <TextBlock x:Name="FontSizeLabel" Text="17"
+                           FontSize="10" FontFamily="Consolas"
+                           Foreground="#60000000"
+                           HorizontalAlignment="Center" Margin="0,0" />
+
+                <!-- Font size down -->
+                <Button x:Name="FontSizeDownButton" Click="FontSizeDownButton_Click"
+                        Style="{StaticResource PanelBtn}">
+                    <TextBlock Text="&#x2212;" FontSize="14"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </Button>
+
+                <!-- Divider -->
+                <Border Height="1" Background="#18000000" Margin="8,4" />
+
+                <!-- Align left -->
+                <ToggleButton x:Name="AlignLeftButton" Click="AlignLeftButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <FontIcon Glyph="&#xE8E4;" FontSize="13"
+                              Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+                <!-- Align center -->
+                <ToggleButton x:Name="AlignCenterButton" Click="AlignCenterButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <FontIcon Glyph="&#xE8E3;" FontSize="13"
+                              Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+                <!-- Align right -->
+                <ToggleButton x:Name="AlignRightButton" Click="AlignRightButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <FontIcon Glyph="&#xE8E2;" FontSize="13"
+                              Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+                <!-- Divider -->
+                <Border Height="1" Background="#18000000" Margin="8,4" />
+
+                <!-- Checklist -->
+                <ToggleButton x:Name="ChecklistButton" Click="ChecklistButton_Click"
+                              Style="{StaticResource PanelToggle}">
+                    <TextBlock Text="☐" FontSize="14"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                </ToggleButton>
+
+            </StackPanel>
+
+            <!-- Info button anchored at bottom -->
+            <Button x:Name="InfoButton" Grid.Row="2"
+                    Style="{StaticResource PanelBtn}"
+                    Margin="0,0,0,12">
+                <Button.Flyout>
+                    <Flyout Placement="Left">
+                        <StackPanel Spacing="4" Padding="2">
+                            <TextBlock Text="Blankr." FontSize="13" FontWeight="SemiBold" />
+                            <TextBlock Text="Sabiq Sabry" FontSize="11"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                            <TextBlock Text="novusian" FontSize="11"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                            <TextBlock Text="&#x00A9; 2026 novusian. All rights reserved."
+                                       FontSize="10"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                                       Margin="0,2,0,0" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+                <FontIcon Glyph="&#xE946;" FontSize="12" Foreground="#40000000" />
+            </Button>
+
+        </Grid>
+    </Grid>
+</Window>
