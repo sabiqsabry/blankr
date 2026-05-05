@@ -55,9 +55,17 @@ Apple may show a **Gatekeeper** warning for builds that are not notarized by App
 
 ---
 
+## Publishing a release (maintainers)
+
+1. Run `./scripts/build-release-dmg.sh` — output is `dist/Blankr-<version>-macOS.dmg`.
+2. Upload that DMG to **[sabiq.dev/products](https://sabiq.dev/products)** (or your CDN) so visitors can install.
+3. Optionally attach the same file to **[GitHub Releases](https://github.com/sabiqsabry/blankr/releases)** for direct downloads from the repo.
+
+---
+
 ## Windows
 
-A **Windows** port is planned. This repo is the shared starting point: pull on your PC and evolve the UI and persistence there while keeping product behavior aligned with the macOS version.
+The **`BlankrWindows/`** solution is a starter for the WinUI port. This repo is the shared starting point: pull on your PC and evolve the UI and persistence there while keeping product behavior aligned with the macOS version.
 
 ---
 
@@ -67,6 +75,7 @@ A **Windows** port is planned. This repo is the shared starting point: pull on y
 |------|---------|
 | `Blankr/` | Swift sources (SwiftUI + AppKit editor) |
 | `Blankr.xcodeproj/` | Xcode project |
+| `BlankrWindows/` | WinUI starter for the Windows port |
 | `scripts/build-release-dmg.sh` | Optional release packaging |
 
 ---
