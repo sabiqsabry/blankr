@@ -19,8 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
-        guard let url = urls.first else { return }
-        NoteSession.shared.loadFile(url: url)
+        NoteSession.shared.loadFiles(urls: urls)
     }
 
     @objc private func systemWillPowerOff(_ notification: Notification) {

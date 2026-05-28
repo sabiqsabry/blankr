@@ -151,7 +151,11 @@ class NoteSession: ObservableObject {
         flushActiveTabFromTextView()
         guard let idx = tabs.firstIndex(where: { $0.id == id }) else { return }
         let tab = tabs[idx]
-        AutoSaveManager.saveIfNeeded(text: tab.cachedText, openedFileURL: tab.openedFileURL)
+        AutoSaveManager.saveIfNeeded(
+            text: tab.cachedText,
+            openedFileURL: tab.openedFileURL,
+            preferredTitle: title(for: tab)
+        )
 
         let wasSelected = id == selectedTabId
         var nextTabs = tabs
@@ -193,6 +197,17 @@ class NoteSession: ObservableObject {
             }
             updateFormattingState()
         } catch {}
+    }
+
+    func loadFiles(urls: [URL]) {
+        guard !urls.isEmpty else { return }
+        loadFile(url: urls[0])
+        if urls.count == 1 { return }
+
+        for url in urls.dropFirst() {
+            addTab()
+            loadFile(url: url)
+        }
     }
 
     func newNote() {

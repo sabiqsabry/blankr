@@ -1,20 +1,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    let uiScale: Double
+
     @ObservedObject private var session = NoteSession.shared
     @State private var renamingTabId: UUID?
     @State private var renameDraft = ""
     @FocusState private var renameFieldFocused: Bool
 
     var body: some View {
-        VStack(spacing: 0) {
-            tabBar
-            HStack(spacing: 0) {
-                RichTextEditor(session: session)
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: .infinity)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                tabBar
+                HStack(spacing: 0) {
+                    RichTextEditor(session: session)
+                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: .infinity)
 
-                FormattingPanel(session: session)
+                    FormattingPanel(session: session)
+                }
             }
+            .frame(
+                width: geometry.size.width / uiScale,
+                height: geometry.size.height / uiScale,
+                alignment: .topLeading
+            )
+            .scaleEffect(uiScale, anchor: .topLeading)
         }
         .onChange(of: renamingTabId) { newId in
             if newId != nil {

@@ -1,7 +1,7 @@
 import Foundation
 
 enum AutoSaveManager {
-    static func saveIfNeeded(text: String, openedFileURL: URL?) {
+    static func saveIfNeeded(text: String, openedFileURL: URL?, preferredTitle: String? = nil) {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
 
@@ -13,11 +13,20 @@ enum AutoSaveManager {
                 for: .desktopDirectory,
                 in: .userDomainMask
             ).first else { return }
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd_HH-mm"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            let filename = formatter.string(from: Date()) + ".txt"
-            url = desktop.appendingPathComponent(filename)
+            let cleanedTitle = preferredTitle?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "/", with: "-")
+                .replacingOccurrences(of: ":", with: "-")
+
+            if let cleanedTitle, !cleanedTitle.isEmpty, cleanedTitle != "Untitled" {
+                url = desktop.appendingPathComponent(cleanedTitle + ".txt")
+            } else {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd_HH-mm"
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                let filename = formatter.string(from: Date()) + ".txt"
+                url = desktop.appendingPathComponent(filename)
+            }
         }
 
         try? text.write(to: url, atomically: true, encoding: .utf8)
