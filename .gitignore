@@ -14,3 +14,6 @@ DerivedData/
 # Packaged releases (upload to GitHub Releases or your site; do not commit binaries)
 dist/
 *.dmg
+
+# Launch-video workspace (the finished video lives in docs/media/)
+brag-output/
