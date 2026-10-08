@@ -3,6 +3,9 @@ import AppKit
 
 struct RichTextEditor: NSViewRepresentable {
     @ObservedObject var session: NoteSession
+    /// App-wide zoom. Applied as scroll-view magnification so text is re-rendered sharp
+    /// at every scale instead of being a stretched bitmap.
+    let zoom: CGFloat
 
     func makeCoordinator() -> Coordinator {
         Coordinator(session: session)
@@ -55,41 +58,27 @@ struct RichTextEditor: NSViewRepresentable {
         scrollView.drawsBackground = true
         scrollView.backgroundColor = .textBackgroundColor
 
-        session.attachTextView(textView)
-        context.coordinator.lastAppliedTabId = session.selectedTabId
+        scrollView.allowsMagnification = false
+        scrollView.magnification = zoom
 
-        DispatchQueue.main.async {
-            textView.window?.makeFirstResponder(textView)
-        }
+        session.attachTextView(textView)
 
         return scrollView
     }
 
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
-        guard let textView = scrollView.documentView as? NSTextView else { return }
-        guard session.selectedTabId != context.coordinator.lastAppliedTabId else { return }
-
-        context.coordinator.lastAppliedTabId = session.selectedTabId
-        let text = session.activeTabPlainText()
-        let attributed = NSAttributedString(string: text, attributes: NoteSession.defaultAttributes)
-        textView.textStorage?.setAttributedString(attributed)
-        textView.typingAttributes = NoteSession.defaultAttributes
-        session.cachedText = text
-        session.syncPublishedFromActiveTab()
-        session.updateFormattingState()
-
-        DispatchQueue.main.async {
-            textView.window?.makeFirstResponder(textView)
+        if scrollView.magnification != zoom {
+            // Zoom around the top-left of what's visible, so the text you're reading stays put.
+            scrollView.setMagnification(zoom, centeredAt: scrollView.documentVisibleRect.origin)
         }
+        (scrollView.verticalRulerView as? LineNumberRuler)?.zoom = zoom
     }
 
     class Coordinator: NSObject, NSTextViewDelegate {
         let session: NoteSession
-        var lastAppliedTabId: UUID
 
         init(session: NoteSession) {
             self.session = session
-            self.lastAppliedTabId = session.selectedTabId
         }
 
         func textViewDidChangeSelection(_ notification: Notification) {
@@ -99,17 +88,30 @@ struct RichTextEditor: NSViewRepresentable {
         }
 
         func textDidChange(_ notification: Notification) {
-            guard let textView = notification.object as? NSTextView else { return }
-            session.updateActiveTabText(textView.string)
+            session.markActiveTabEdited()
         }
 
         // MARK: - Checklist Enter-key handling
 
         func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
             if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+                if (textView as? BlankrTextView)?.documentKind.isViewer == true {
+                    return handleIndentedNewline(textView: textView)
+                }
                 return handleChecklistNewline(textView: textView)
             }
             return false
+        }
+
+        /// In code, a new line starts at the same indentation as the current one.
+        private func handleIndentedNewline(textView: NSTextView) -> Bool {
+            let nsString = textView.string as NSString
+            let sel = textView.selectedRange()
+            let lineRange = nsString.lineRange(for: NSRange(location: sel.location, length: 0))
+            let line = nsString.substring(with: NSRange(location: lineRange.location, length: sel.location - lineRange.location))
+            let indent = String(line.prefix { $0 == " " || $0 == "\t" })
+            textView.insertText("\n" + indent, replacementRange: sel)
+            return true
         }
 
         private func handleChecklistNewline(textView: NSTextView) -> Bool {
@@ -119,6 +121,23 @@ struct RichTextEditor: NSViewRepresentable {
             let sel = textView.selectedRange()
             let lineRange = nsString.lineRange(for: NSRange(location: sel.location, length: 0))
             let line = nsString.substring(with: lineRange).trimmingCharacters(in: .newlines)
+
+            // Numbered list: Enter continues with the next number; Enter on an empty item ends the list.
+            if let prefix = FormattingActions.numberedPrefix(of: line) {
+                let rest = (line as NSString).substring(from: prefix.length).trimmingCharacters(in: .whitespaces)
+                if rest.isEmpty {
+                    let indentLength = (prefix.indent as NSString).length
+                    let range = NSRange(location: lineRange.location + indentLength, length: prefix.length - indentLength)
+                    if textView.shouldChangeText(in: range, replacementString: "") {
+                        textView.textStorage?.replaceCharacters(in: range, with: "")
+                        textView.didChangeText()
+                    }
+                    return true
+                }
+                let insertion = "\n\(prefix.indent)\(prefix.number + 1). "
+                textView.insertText(insertion, replacementRange: sel)
+                return true
+            }
 
             let uc = FormattingActions.uncheckedBox
             let ch = FormattingActions.checkedBox

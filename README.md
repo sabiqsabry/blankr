@@ -8,12 +8,17 @@ A minimal, native **macOS** notes app: open it, write, close. Nothing else in th
 
 ## Why Blankr.
 
-- **Browser-style tabs** — several documents at once; each tab keeps its own text and optional file association.
-- **Auto-save** — when you close a tab or quit with unsaved content, a `.txt` is written to your **Desktop** with a timestamp (or back to an opened file when applicable).
-- **Rename tabs** — double-click a tab title to give it a custom name; otherwise it stays **Untitled**.
-- **Quiet formatting** — bold, italic, underline, size, alignment, and checklist lines from a slim side panel.
+- **Browser-style tabs** — several documents at once; each tab keeps its own text, formatting, and optional file association.
+- **Auto-save** — when you close a tab, quit, or shut down, every tab with content is saved: back to the file it was opened from, or to your **Desktop** as `<tab title>.txt` (or a timestamp when untitled). Notes with formatting are saved as `.rtf` so it isn't lost. Existing files are never overwritten — a clash becomes `Notes 2.txt`.
+- **Picks up where you left off** — open tabs come back on the next launch.
+- **Rename tabs** — double-click a tab title to give it a custom name; a note Blankr. saved for you is renamed on disk to match.
+- **Markdown viewer** — `.md` files open fully rendered (headings, tables, task lists, highlighted code blocks, images, links); flip to the source with the pencil.
+- **Code viewer** — 80+ languages detected from the file (JS/TS, Python, Swift, Java, Go, Rust, C/C++, HTML/CSS, JSON, YAML, SQL, shell…) and shown with syntax highlighting and line numbers, structure untouched. Read-only by default; unlock to edit. ⌘F to find.
+- **Zoom that fits your display** — a comfortable default is picked from each monitor's size and resolution (and re-picked when you move to another screen); ⌘= / ⌘- / ⌘0 adjust on top of it, text stays sharp.
+- **Quiet formatting** — bold, italic, underline, size, alignment, checklists and numbered lists (Enter continues the list, Enter on an empty item ends it) from a slim side panel.
+- **Line numbers** — optional for every tab (notes too); off by default, toggle from the panel (#) or ⌥⌘L.
 - **Copy line breaks** — optional checkbox in the panel: include real line breaks in copied text, or flatten to a single line for pasting elsewhere.
-- **Privacy** — fully offline, no telemetry, opens `.txt` from Finder when you double-click.
+- **Privacy** — fully offline, no telemetry, opens text, Markdown and code from Finder (*Open With*) or ⌘O. Markdown previews run with JavaScript disabled; they do load images a document links to.
 
 Requires **macOS 13 (Ventura)** or later.
 
@@ -74,6 +79,8 @@ The **`BlankrWindows/`** solution is a starter for the WinUI port. This repo is 
 | Path | Purpose |
 |------|---------|
 | `Blankr/` | Swift sources (SwiftUI + AppKit editor) |
+| `Blankr/Viewer/` | Markdown rendering, language detection, syntax highlighting |
+| `Blankr/Resources/ThirdParty/` | Bundled [highlight.js](https://highlightjs.org) 11.9.0 (BSD-3) and [marked](https://marked.js.org) 12.0.2 (MIT), with licenses |
 | `Blankr.xcodeproj/` | Xcode project |
 | `BlankrWindows/` | WinUI starter for the Windows port |
 | `scripts/build-release-dmg.sh` | Optional release packaging |

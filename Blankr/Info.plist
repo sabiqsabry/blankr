@@ -36,7 +36,101 @@
 				<string>public.plain-text</string>
 			</array>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Rich Text Document</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rtf</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.rtf</string>
+			</array>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Source Code and Text</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+				<string>public.script</string>
+				<string>public.json</string>
+				<string>public.xml</string>
+				<string>public.yaml</string>
+				<string>net.daringfireball.markdown</string>
+			</array>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Code (by extension)</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ts</string>
+				<string>tsx</string>
+				<string>mts</string>
+				<string>cts</string>
+				<string>jsx</string>
+				<string>mjs</string>
+				<string>cjs</string>
+				<string>vue</string>
+				<string>svelte</string>
+				<string>astro</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdx</string>
+				<string>kt</string>
+				<string>kts</string>
+				<string>gradle</string>
+				<string>dart</string>
+				<string>scala</string>
+				<string>sc</string>
+				<string>rs</string>
+				<string>go</string>
+				<string>ex</string>
+				<string>exs</string>
+				<string>erl</string>
+				<string>clj</string>
+				<string>cljs</string>
+				<string>edn</string>
+				<string>hs</string>
+				<string>nim</string>
+				<string>cr</string>
+				<string>jl</string>
+				<string>ml</string>
+				<string>mli</string>
+				<string>fs</string>
+				<string>fsx</string>
+				<string>fsi</string>
+				<string>proto</string>
+				<string>toml</string>
+				<string>ini</string>
+				<string>cfg</string>
+				<string>conf</string>
+				<string>env</string>
+				<string>lock</string>
+				<string>log</string>
+				<string>gql</string>
+				<string>graphql</string>
+				<string>tf</string>
+				<string>hcl</string>
+				<string>dockerfile</string>
+			</array>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 		</dict>
 	</array>
 </dict>

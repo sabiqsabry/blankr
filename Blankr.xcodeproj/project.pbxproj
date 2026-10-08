@@ -19,6 +19,14 @@
 		E13013F4B10054A2F25A65CA /* AutoSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F85CFB8DE9BAF16E25275F0 /* AutoSaveManager.swift */; };
 		E39791EC01950B1645868258 /* BlankrTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6822D82F6F867A99783BED /* BlankrTextView.swift */; };
 		F3BBBBE63DE43316DA3FFC58 /* RichTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632FA1E94659F4B87F7FBC96 /* RichTextEditor.swift */; };
+		A5B534C0F4CF0495B57469A5 /* DocumentKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62BACA60EAB8CA471BD61BF /* DocumentKind.swift */; };
+		ED7E944B6CE9D9B3FDA671B2 /* SyntaxEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF3A178EAB7F9B22C6BD39 /* SyntaxEngine.swift */; };
+		0A5027851A2A3B799C119D72 /* CodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0357A1ED05BA5BA2F4EEE427 /* CodeTheme.swift */; };
+		EA99A2DCAB604F83396D035B /* MarkdownPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C556302D906116F841A256 /* MarkdownPreview.swift */; };
+		5433FC20D68DBF1CC56B57AD /* LineNumberRuler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B1C1BA9BD222D93D7967BC /* LineNumberRuler.swift */; };
+		E9187B2B0DEE38344CC786BC /* DisplayScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27D018AE78E7F59C9F61357 /* DisplayScale.swift */; };
+		2E8416BF2A344D44A0E1D9A1 /* ThirdParty in Resources */ = {isa = PBXBuildFile; fileRef = 7573355BE9D260328E9A7AFB /* ThirdParty */; };
+		00943DAB7F1024ED58C60D49 /* PressableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C353E6C639CE6AADC801B290 /* PressableButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,12 +43,22 @@
 		D592FBF73C6C8E15B69A3742 /* BlankrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankrApp.swift; sourceTree = "<group>"; };
 		F6165E52B94532AC86F136D7 /* FormattingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingPanel.swift; sourceTree = "<group>"; };
 		F988511CFC784080CC29E631 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
+		A62BACA60EAB8CA471BD61BF /* DocumentKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentKind.swift; sourceTree = "<group>"; };
+		33FF3A178EAB7F9B22C6BD39 /* SyntaxEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxEngine.swift; sourceTree = "<group>"; };
+		0357A1ED05BA5BA2F4EEE427 /* CodeTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTheme.swift; sourceTree = "<group>"; };
+		26C556302D906116F841A256 /* MarkdownPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPreview.swift; sourceTree = "<group>"; };
+		C8B1C1BA9BD222D93D7967BC /* LineNumberRuler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNumberRuler.swift; sourceTree = "<group>"; };
+		F27D018AE78E7F59C9F61357 /* DisplayScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayScale.swift; sourceTree = "<group>"; };
+		7573355BE9D260328E9A7AFB /* ThirdParty */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThirdParty; sourceTree = "<group>"; };
+		C353E6C639CE6AADC801B290 /* PressableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressableButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		020B4B42FF62480129DA9656 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C353E6C639CE6AADC801B290 /* PressableButtonStyle.swift */,
+				F27D018AE78E7F59C9F61357 /* DisplayScale.swift */,
 				F6165E52B94532AC86F136D7 /* FormattingPanel.swift */,
 				C01D2E3F405162738495A6BB /* TabTitleLabel.swift */,
 			);
@@ -82,6 +100,7 @@
 		CC843590236B0CB82ED89D36 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				C8B1C1BA9BD222D93D7967BC /* LineNumberRuler.swift */,
 				9F6822D82F6F867A99783BED /* BlankrTextView.swift */,
 				B77695828293812CFD01F4B0 /* FormattingActions.swift */,
 				632FA1E94659F4B87F7FBC96 /* RichTextEditor.swift */,
@@ -101,8 +120,29 @@
 				2B9926CF61C138A6115559DF /* Model */,
 				8F858948DD6C92355B3AE8EC /* Persistence */,
 				020B4B42FF62480129DA9656 /* Views */,
+				F6310CE97010878652ADDDFE /* Viewer */,
+				420F7432802D557CBA72077D /* Resources */,
 			);
 			path = Blankr;
+			sourceTree = "<group>";
+		};
+		F6310CE97010878652ADDDFE /* Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				A62BACA60EAB8CA471BD61BF /* DocumentKind.swift */,
+				33FF3A178EAB7F9B22C6BD39 /* SyntaxEngine.swift */,
+				0357A1ED05BA5BA2F4EEE427 /* CodeTheme.swift */,
+				26C556302D906116F841A256 /* MarkdownPreview.swift */,
+			);
+			path = Viewer;
+			sourceTree = "<group>";
+		};
+		420F7432802D557CBA72077D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7573355BE9D260328E9A7AFB /* ThirdParty */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E8416BF2A344D44A0E1D9A1 /* ThirdParty in Resources */,
 				6A1F0B292C267033D8E7492E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +216,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00943DAB7F1024ED58C60D49 /* PressableButtonStyle.swift in Sources */,
+				E9187B2B0DEE38344CC786BC /* DisplayScale.swift in Sources */,
+				5433FC20D68DBF1CC56B57AD /* LineNumberRuler.swift in Sources */,
+				EA99A2DCAB604F83396D035B /* MarkdownPreview.swift in Sources */,
+				0A5027851A2A3B799C119D72 /* CodeTheme.swift in Sources */,
+				ED7E944B6CE9D9B3FDA671B2 /* SyntaxEngine.swift in Sources */,
+				A5B534C0F4CF0495B57469A5 /* DocumentKind.swift in Sources */,
 				64DBE25D9C0F8B2E08EEB6C8 /* AppDelegate.swift in Sources */,
 				E13013F4B10054A2F25A65CA /* AutoSaveManager.swift in Sources */,
 				8543DBF34C5A85ABC73AD0D0 /* BlankrApp.swift in Sources */,
@@ -317,7 +365,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_APP_SANDBOX = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Blankr/Info.plist;
@@ -326,7 +374,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.blankr.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -340,7 +388,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_APP_SANDBOX = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Blankr/Info.plist;
@@ -349,7 +397,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.blankr.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

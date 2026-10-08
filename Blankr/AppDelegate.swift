@@ -15,23 +15,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        performSave()
+        NoteSession.shared.saveAllForTermination()
+    }
+
+    func applicationWillResignActive(_ notification: Notification) {
+        NoteSession.shared.saveSessionSnapshot()
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
-        NoteSession.shared.loadFiles(urls: urls)
+        NoteSession.shared.openFiles(urls: urls)
     }
 
     @objc private func systemWillPowerOff(_ notification: Notification) {
-        performSave()
-    }
-
-    private func performSave() {
-        let session = NoteSession.shared
-        session.flushActiveTabFromTextView()
-        AutoSaveManager.saveIfNeeded(
-            text: session.currentText,
-            openedFileURL: session.activeTabOpenedFileURL()
-        )
+        NoteSession.shared.saveAllForTermination()
     }
 }

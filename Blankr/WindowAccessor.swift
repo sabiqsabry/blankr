@@ -9,6 +9,7 @@ struct WindowAccessor: NSViewRepresentable {
             window.title = "Blankr."
             window.toolbar = nil
             window.titleVisibility = .visible
+            DisplayScale.shared.track(window)
         }
         return view
     }

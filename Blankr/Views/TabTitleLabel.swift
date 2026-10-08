@@ -4,7 +4,9 @@ import AppKit
 /// Single-click selects tab; double-click starts rename.
 struct TabTitleLabel: NSViewRepresentable {
     let title: String
+    var toolTip: String? = nil
     let isSelected: Bool
+    var fontSize: CGFloat = 12
     let onSelect: () -> Void
     let onRename: () -> Void
 
@@ -23,8 +25,9 @@ struct TabTitleLabel: NSViewRepresentable {
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 
+        view.toolTip = toolTip
         context.coordinator.label = label
-        context.coordinator.applyStyle(isSelected: isSelected)
+        context.coordinator.applyStyle(isSelected: isSelected, fontSize: fontSize)
         context.coordinator.onSelect = onSelect
         context.coordinator.onRename = onRename
 
@@ -33,8 +36,9 @@ struct TabTitleLabel: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: TitleHitView, context: Context) {
+        nsView.toolTip = toolTip
         context.coordinator.label?.stringValue = title
-        context.coordinator.applyStyle(isSelected: isSelected)
+        context.coordinator.applyStyle(isSelected: isSelected, fontSize: fontSize)
         context.coordinator.onSelect = onSelect
         context.coordinator.onRename = onRename
     }
@@ -78,8 +82,8 @@ struct TabTitleLabel: NSViewRepresentable {
         var onSelect: (() -> Void)?
         var onRename: (() -> Void)?
 
-        func applyStyle(isSelected: Bool) {
-            label?.font = NSFont.systemFont(ofSize: 12, weight: isSelected ? .semibold : .regular)
+        func applyStyle(isSelected: Bool, fontSize: CGFloat) {
+            label?.font = NSFont.systemFont(ofSize: fontSize, weight: isSelected ? .semibold : .regular)
             label?.textColor = isSelected ? .labelColor : .secondaryLabelColor
         }
     }
