@@ -52,6 +52,8 @@ struct RichTextEditor: NSViewRepresentable {
         textView.typingAttributes = NoteSession.defaultAttributes
         textView.delegate = context.coordinator
 
+        // Nothing in the editor (line-number gutter included) may draw outside it.
+        scrollView.clipsToBounds = true
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.scrollerStyle = .overlay

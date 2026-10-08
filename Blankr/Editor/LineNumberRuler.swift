@@ -22,6 +22,9 @@ final class LineNumberRuler: NSRulerView {
         super.init(scrollView: textView.enclosingScrollView, orientation: .verticalRuler)
         clientView = textView
         ruleThickness = 40
+        // Since macOS 14 views don't clip their drawing by default, and the ruler's divider line
+        // would run up through the tab bar. Keep it inside the editor area.
+        clipsToBounds = true
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(textDidChange),
