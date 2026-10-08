@@ -2,9 +2,9 @@
 
 A minimal, native **macOS** notes app: open it, write, close. Nothing else in the way.
 
-[![Watch the 25-second Blankr. launch video](docs/media/blankr-launch.jpg)](docs/media/blankr-launch.mp4)
+[![Blankr. launch video: type a note, close it and it's already on your Desktop; the formatting panel, code and Markdown viewing, and dark mode](docs/media/blankr-launch.gif)](docs/media/blankr-launch.mp4)
 
-<sub>▶ Click to watch the 25-second launch video.</sub>
+<sub>▶ The 25-second launch video, playing silently above. [Watch it with sound (MP4)](docs/media/blankr-launch.mp4).</sub>
 
 **Download the app:** grab the latest DMG from **[GitHub Releases](https://github.com/sabiqsabry/blankr/releases/latest)** or **[Products on sabiq.dev](https://sabiq.dev/products)**. This repository holds **source code** for developers and for the upcoming Windows version.
 
