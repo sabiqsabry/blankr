@@ -2,7 +2,7 @@
 
 A minimal, native **macOS** notes app: open it, write, close. Nothing else in the way.
 
-**Download the app:** visit **[Products on sabiq.dev](https://sabiq.dev/products)** for the latest macOS build (DMG and install notes). This repository holds **source code** for developers and for the upcoming Windows version.
+**Download the app:** grab the latest DMG from **[GitHub Releases](https://github.com/sabiqsabry/blankr/releases/latest)** or **[Products on sabiq.dev](https://sabiq.dev/products)**. This repository holds **source code** for developers and for the upcoming Windows version.
 
 ---
 
@@ -28,10 +28,11 @@ Requires **macOS 13 (Ventura)** or later.
 
 | Where | Link |
 |--------|------|
+| Latest release (DMG) | **[GitHub Releases](https://github.com/sabiqsabry/blankr/releases/latest)** |
 | Product page (installers & context) | **[sabiq.dev/products](https://sabiq.dev/products)** |
 | Source & issues | **[github.com/sabiqsabry/blankr](https://github.com/sabiqsabry/blankr)** |
 
-Apple may show a **Gatekeeper** warning for builds that are not notarized by Apple. If that appears: **System Settings → Privacy & Security** and choose to open anyway, or right-click the app → **Open**.
+Builds aren't notarized by Apple yet, so the first launch shows a **Gatekeeper** warning. Open **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to Blankr (once).
 
 ---
 
