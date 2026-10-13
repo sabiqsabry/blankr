@@ -18,7 +18,8 @@ A minimal, native **macOS** notes app: open it, write, close. Nothing else in th
 - **Rename tabs** — double-click a tab title to give it a custom name; a note Blankr. saved for you is renamed on disk to match.
 - **Markdown viewer** — `.md` files open fully rendered (headings, tables, task lists, highlighted code blocks, images, links); flip to the source with the pencil.
 - **Code viewer** — 80+ languages detected from the file (JS/TS, Python, Swift, Java, Go, Rust, C/C++, HTML/CSS, JSON, YAML, SQL, shell…) and shown with syntax highlighting and line numbers, structure untouched. Read-only by default; unlock to edit. ⌘F to find.
-- **Zoom that fits your display** — a comfortable default is picked from each monitor's size and resolution (and re-picked when you move to another screen); ⌘= / ⌘- / ⌘0 adjust on top of it, text stays sharp.
+- **Zoom that fits your display** — a comfortable default is picked from each monitor's size and resolution (and re-picked when you move to another screen); ⌘+ / ⌘- / ⌘0 or a trackpad pinch adjust on top of it, text stays sharp.
+- **Reading zoom for Markdown and code** — in a Markdown or code tab, ⌘+ / ⌘- / ⌘0, pinching, or the magnifier buttons in the side panel resize just the document text (50–300%), leaving tabs and panel as they are. Your text size is remembered for every Markdown and code file.
 - **Quiet formatting** — bold, italic, underline, size, alignment, checklists and numbered lists (Enter continues the list, Enter on an empty item ends it) from a slim side panel.
 - **Line numbers** — optional for every tab (notes too); off by default, toggle from the panel (#) or ⌥⌘L.
 - **Copy line breaks** — optional checkbox in the panel: include real line breaks in copied text, or flatten to a single line for pasting elsewhere.

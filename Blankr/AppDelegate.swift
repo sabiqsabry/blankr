@@ -2,6 +2,7 @@ import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
+        ZoomController.shared.installEventMonitors()
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
             selector: #selector(systemWillPowerOff),

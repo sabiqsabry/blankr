@@ -49,15 +49,14 @@ extension View {
 }
 
 struct ContentView: View {
-    /// The user's zoom (⌘= / ⌘-), relative to the display's comfortable default.
-    let uiScale: Double
-
     @ObservedObject private var session = NoteSession.shared
+    @ObservedObject private var zoom = ZoomController.shared
     @ObservedObject private var display = DisplayScale.shared
     @State private var renamingTabId: UUID?
     @State private var renameDraft = ""
     @FocusState private var renameFieldFocused: Bool
     @State private var zoomBadgeVisible = false
+    @State private var zoomBadgePercent = 100
     @State private var zoomBadgeHide: DispatchWorkItem?
 
     var body: some View {
@@ -66,7 +65,7 @@ struct ContentView: View {
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
                     ZStack {
-                        RichTextEditor(session: session, zoom: scale)
+                        RichTextEditor(session: session, zoom: editorZoom)
                         if let preview = session.preview {
                             markdownPreview(preview)
                         }
@@ -90,14 +89,26 @@ struct ContentView: View {
                 }
             }
         }
-        .onChange(of: uiScale) { _ in
-            showZoomBadge()
+        .onChange(of: zoom.uiScale) { value in
+            showZoomBadge(value)
+        }
+        .onChange(of: zoom.readingZoom) { value in
+            showZoomBadge(value)
         }
     }
 
     /// Display default × user zoom, kept within readable bounds.
     private var scale: CGFloat {
-        min(3, max(0.5, display.factor * CGFloat(uiScale)))
+        min(3, max(0.5, display.factor * CGFloat(zoom.uiScale)))
+    }
+
+    /// Markdown and code text also carries its own reading zoom.
+    private var readingScale: CGFloat {
+        scale * CGFloat(zoom.readingZoom)
+    }
+
+    private var editorZoom: CGFloat {
+        session.activeKind.isViewer ? readingScale : scale
     }
 
     @ViewBuilder
@@ -105,7 +116,7 @@ struct ContentView: View {
         ZStack {
             Color(nsColor: .textBackgroundColor)
             if let html = preview.html {
-                MarkdownPreview(html: html, baseURL: preview.baseURL, zoom: scale) { url in
+                MarkdownPreview(html: html, baseURL: preview.baseURL, zoom: readingScale) { url in
                     session.openFiles(urls: [url])
                 }
             }
@@ -137,7 +148,7 @@ struct ContentView: View {
     }
 
     private var zoomBadge: some View {
-        Text("\(Int((uiScale * 100).rounded()))%")
+        Text("\(zoomBadgePercent)%")
             .font(.system(size: 12 * scale, weight: .semibold, design: .rounded))
             .padding(.horizontal, 12 * scale)
             .padding(.vertical, 6 * scale)
@@ -148,7 +159,8 @@ struct ContentView: View {
             .allowsHitTesting(false)
     }
 
-    private func showZoomBadge() {
+    private func showZoomBadge(_ value: Double) {
+        zoomBadgePercent = Int((value * 100).rounded())
         zoomBadgeVisible = true
         zoomBadgeHide?.cancel()
         let hide = DispatchWorkItem { zoomBadgeVisible = false }

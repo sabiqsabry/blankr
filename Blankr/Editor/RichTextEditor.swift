@@ -3,8 +3,8 @@ import AppKit
 
 struct RichTextEditor: NSViewRepresentable {
     @ObservedObject var session: NoteSession
-    /// App-wide zoom. Applied as scroll-view magnification so text is re-rendered sharp
-    /// at every scale instead of being a stretched bitmap.
+    /// App-wide zoom (times the reading zoom for Markdown and code). Applied as scroll-view
+    /// magnification so text is re-rendered sharp at every scale instead of being a stretched bitmap.
     let zoom: CGFloat
 
     func makeCoordinator() -> Coordinator {
@@ -60,7 +60,11 @@ struct RichTextEditor: NSViewRepresentable {
         scrollView.drawsBackground = true
         scrollView.backgroundColor = .textBackgroundColor
 
+        // Zoom is driven by ZoomController (pinch included), never by the scroll view itself.
+        // The limits must cover app zoom × reading zoom (AppKit's defaults stop at 0.25–4).
         scrollView.allowsMagnification = false
+        scrollView.minMagnification = 0.1
+        scrollView.maxMagnification = 10
         scrollView.magnification = zoom
 
         session.attachTextView(textView)

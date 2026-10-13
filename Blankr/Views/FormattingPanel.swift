@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FormattingPanel: View {
     @ObservedObject var session: NoteSession
+    @ObservedObject private var zoom = ZoomController.shared
     @AppStorage("isDarkMode") private var isDarkMode = true
     @State private var showingInfo = false
     @Environment(\.uiScale) private var scale
@@ -57,6 +58,9 @@ struct FormattingPanel: View {
             }
         }
 
+        divider
+        readingZoomControls
+
         if session.activeKind != .markdown || editing {
             divider
             lineNumbersButton
@@ -64,6 +68,34 @@ struct FormattingPanel: View {
                 session.setWrapsLines(!(tab?.wrapsLines ?? false))
             }
         }
+    }
+
+    /// Text size for Markdown and code (the same as ⌘+ / ⌘- / ⌘0 and pinching).
+    /// Laid out like the notes' font-size control: larger, the value, smaller.
+    @ViewBuilder
+    private var readingZoomControls: some View {
+        toolButton(icon: "plus.magnifyingglass", active: false, help: "Zoom in (⌘+)") {
+            zoom.zoomIn()
+        }
+        .disabled(zoom.readingZoom >= ZoomController.readingZoomRange.upperBound)
+
+        Button(action: { zoom.readingZoom = 1 }) {
+            Text("\(Int((zoom.readingZoom * 100).rounded()))%")
+                .font(.system(size: 9.5 * scale, design: .monospaced))
+                .foregroundStyle(zoom.readingZoom == 1 ? .tertiary : .secondary)
+                .lineLimit(1)
+                .fixedSize()
+                .frame(width: 36 * scale, height: 16 * scale)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.pressable)
+        .help("Text size — click for actual size (⌘0)")
+        .accessibilityLabel("Text size \(Int((zoom.readingZoom * 100).rounded())) percent, reset to actual size")
+
+        toolButton(icon: "minus.magnifyingglass", active: false, help: "Zoom out (⌘-)") {
+            zoom.zoomOut()
+        }
+        .disabled(zoom.readingZoom <= ZoomController.readingZoomRange.lowerBound)
     }
 
     private var lineNumbersButton: some View {
