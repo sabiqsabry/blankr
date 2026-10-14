@@ -1,0 +1,35 @@
+# Attaches a copy of the release DMG under a fixed name, so
+# https://github.com/sabiqsabry/blankr/releases/latest/download/Blankr-macOS.dmg
+# always serves the newest build (used by sabiq.dev/products).
+name: Stable DMG name
+
+on:
+  release:
+    types: [published, edited]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to fix up (e.g. v1.5.1)
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  stable-dmg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload Blankr-macOS.dmg
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          set -euo pipefail
+          src="$(gh release view "$TAG" -R "$GITHUB_REPOSITORY" --json assets \
+            -q '[.assets[].name | select(test("^Blankr-[0-9.]+-macOS\\.dmg$"))][0] // empty')"
+          if [ -z "$src" ]; then
+            echo "No Blankr-<version>-macOS.dmg on $TAG yet; attach it and edit the release to rerun."
+            exit 0
+          fi
+          gh release download "$TAG" -R "$GITHUB_REPOSITORY" -p "$src" -O Blankr-macOS.dmg
+          gh release upload "$TAG" -R "$GITHUB_REPOSITORY" Blankr-macOS.dmg --clobber

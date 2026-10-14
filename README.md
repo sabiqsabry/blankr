@@ -69,8 +69,8 @@ Builds aren't notarized by Apple yet, so the first launch shows a **Gatekeeper**
 ## Publishing a release (maintainers)
 
 1. Run `./scripts/build-release-dmg.sh` — output is `dist/Blankr-<version>-macOS.dmg`.
-2. Upload that DMG to **[sabiq.dev/products](https://sabiq.dev/products)** (or your CDN) so visitors can install.
-3. Optionally attach the same file to **[GitHub Releases](https://github.com/sabiqsabry/blankr/releases)** for direct downloads from the repo.
+2. Attach that DMG to a new **[GitHub Release](https://github.com/sabiqsabry/blankr/releases)**.
+3. The `Stable DMG name` workflow then adds a copy named `Blankr-macOS.dmg`, so `releases/latest/download/Blankr-macOS.dmg` (the link on **[sabiq.dev/products](https://sabiq.dev/products)**) always serves the newest build. Nothing to update on the site.
 
 ---
 
