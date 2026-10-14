@@ -56,6 +56,8 @@ struct RichTextEditor: NSViewRepresentable {
         scrollView.clipsToBounds = true
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
+        // No empty scroller tracks beside short files when "show scroll bars" is set to always.
+        scrollView.autohidesScrollers = true
         scrollView.scrollerStyle = .overlay
         scrollView.drawsBackground = true
         scrollView.backgroundColor = .textBackgroundColor

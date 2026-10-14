@@ -12,31 +12,40 @@ extension EnvironmentValues {
     }
 }
 
-/// Colors for the UI around the writing area. Dark mode keeps the system look (which already
-/// separates chrome from the editor); light mode gets a soft grey and hairlines, since the
-/// system window background there is as white as the editor itself.
+/// Colors for the UI around the writing area: a solid frame (title bar, tabs, side panel,
+/// status bar) set apart from the editor by hairlines. Light mode uses a soft grey, since the
+/// editor is white; dark mode a shade deeper than the editor, so the text area stands forward
+/// instead of everything blending into one washed-out grey.
 enum Chrome {
-    static let background = dynamic(
+    static let backgroundColor = dynamicNS(
         light: NSColor(srgbRed: 0.957, green: 0.957, blue: 0.949, alpha: 1),
-        dark: NSColor.windowBackgroundColor.withAlphaComponent(0.5)
+        dark: NSColor(srgbRed: 0.094, green: 0.094, blue: 0.102, alpha: 1)
     )
+    static let background = Color(nsColor: backgroundColor)
     static let separator = dynamic(
         light: NSColor(srgbRed: 0.878, green: 0.878, blue: 0.867, alpha: 1),
-        dark: .clear
+        dark: NSColor.white.withAlphaComponent(0.08)
     )
-    /// Selected tab: a white chip in light mode (with the accent tint on top).
-    static let selectedTabBase = dynamic(light: .white, dark: .clear)
-    static let idleTab = dynamic(light: NSColor.black.withAlphaComponent(0.035), dark: .clear)
+    /// Selected tab: a raised chip (with the accent tint on top).
+    static let selectedTabBase = dynamic(light: .white, dark: NSColor.white.withAlphaComponent(0.07))
+    static let idleTab = dynamic(
+        light: NSColor.black.withAlphaComponent(0.035),
+        dark: NSColor.white.withAlphaComponent(0.035)
+    )
+
+    private static func dynamicNS(light: NSColor, dark: NSColor) -> NSColor {
+        NSColor(name: nil) { appearance in
+            appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? dark : light
+        }
+    }
 
     private static func dynamic(light: NSColor, dark: NSColor) -> Color {
-        Color(nsColor: NSColor(name: nil) { appearance in
-            appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? dark : light
-        })
+        Color(nsColor: dynamicNS(light: light, dark: dark))
     }
 }
 
 extension View {
-    /// A 1pt hairline on one edge (light mode only; clear in dark mode).
+    /// A 1pt hairline on one edge.
     func chromeEdge(_ edge: Alignment) -> some View {
         overlay(alignment: edge) {
             if edge == .leading || edge == .trailing {

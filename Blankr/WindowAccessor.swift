@@ -9,6 +9,9 @@ struct WindowAccessor: NSViewRepresentable {
             window.title = "Blankr."
             window.toolbar = nil
             window.titleVisibility = .visible
+            // The title bar shares the chrome's color, so it and the tab bar read as one surface.
+            window.titlebarAppearsTransparent = true
+            window.backgroundColor = Chrome.backgroundColor
             DisplayScale.shared.track(window)
         }
         return view
